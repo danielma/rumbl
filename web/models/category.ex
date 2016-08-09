@@ -1,18 +1,22 @@
-defmodule Rumbl.Video do
+defmodule Rumbl.Category do
   use Rumbl.Web, :model
 
-  schema "videos" do
-    field :url, :string
-    field :title, :string
-    field :description, :string
-    belongs_to :user, Rumbl.User
-    belongs_to :category, Rumbl.Category
+  schema "categories" do
+    field :name, :string
 
     timestamps
   end
 
-  @required_fields ~w(url title description)
-  @optional_fields ~w(category_id)
+  @required_fields ~w(name)
+  @optional_fields ~w()
+
+  def alphabetical(query) do
+    from c in query, order_by: c.name
+  end
+
+  def names_and_ids(query) do
+    from c in query, select: {c.name, c.id}
+  end
 
   @doc """
   Creates a changeset based on the `model` and `params`.
