@@ -10,6 +10,14 @@ defmodule Rumbl.Category do
   @required_fields ~w(name)
   @optional_fields ~w()
 
+  def alphabetical(query) do
+    from c in query, order_by: c.name
+  end
+
+  def names_and_ids(query) do
+    from c in query, select: {c.name, c.id}
+  end
+
   @doc """
   Creates a changeset based on the `model` and `params`.
 
